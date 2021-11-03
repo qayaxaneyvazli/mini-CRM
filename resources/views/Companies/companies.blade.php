@@ -56,12 +56,8 @@
                                             <div class="text-sm font-medium text-gray-900">
                                                 {{$company->name}}
                                             </div>
-
-
-
-
-
                         </div>
+                     
                     </div>
 
                     </td>

@@ -36,6 +36,7 @@
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                 @foreach($employers as $employer)
+                                    @foreach($employer->company as $company)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="flex items-center">
@@ -51,7 +52,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                 <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                  {{$employer->company_id}}
+                  {{$employer->company->name}}
                 </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -64,6 +65,7 @@
                                         <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                     </td>
                                 </tr>
+                                        @endforeach
                                 @endforeach
                                 <!-- More people... -->
                                 </tbody>
