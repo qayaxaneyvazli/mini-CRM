@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LanguageController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,29 +16,26 @@ use App\Http\Controllers\EmployerController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    if(auth()->user()){
-        auth()->user()->assignRole('user');
-    }
-    if(auth()->user()==='admin'){
-        auth()->user()->assignRole('admin');
-    }
-    return view('welcome');
-});
+
+//Route::middleware(['verified'])->group(['prefix'=>'{language}'],function(){
+//
+//
+//
+//});
+
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function(){
-
-
-    Route::get('/companies', function () {
-        return view('companies.companies');
-    });
-    Route::get('/dashboard', function () {
+    Route::get('/', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::get('/employers', function () {
-        return view('employers.employers');
 
-    });
     Route::resource('/companies', CompanyController::class);
     Route::resource('/employers', EmployerController::class);
+
+
+});
+
+//Users section only for Admins
+Route::middleware(['auth:sanctum','role:Admin', 'verified'])->group(function(){
+        Route::resource('/users', UserController::class);
 });

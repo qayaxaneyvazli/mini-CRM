@@ -29,9 +29,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return view("Companies.create");
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -40,9 +38,6 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
-
-
         $messages = [
             'name.required' => 'Please enter name!',
             'logo.dimensions' => 'Please upload 100x100 picture!'
@@ -55,9 +50,9 @@ class CompanyController extends Controller
         $input = $request->all();
         $file = $request->file('logo');
         $extension = $file->getClientOriginalName();
-        $FileName = date('d-m-y') . '-' . $extension;
-        $file->storeAs('public/images/', $FileName);
-        $input['logo'] = $FileName;
+        $fileName = date('d-m-y') . '-' . $extension;
+        $file->storeAs('public/images/', $fileName);
+        $input['logo'] = $fileName;
         Company::create($input);
         return redirect()->route('companies.index')->with('success', 'Company created successfully.');
     }
@@ -81,10 +76,7 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        $companies = Company::findOrFail($company->id);
-
-        return view("companies.edit", compact('companies'));
-
+        return view("companies.edit", compact('company'));
     }
 
     /**
@@ -107,13 +99,12 @@ class CompanyController extends Controller
 
             File::delete($destination);
         }
-
         $file = $request->file('logo');
         $extension = $file->getClientOriginalName();
-        $FileName = date('d-m-y') . '-' . $extension;
-        $file->storeAs('public/images/', $FileName);
+        $fileName = date('d-m-y') . '-' . $extension;
+        $file->storeAs('public/images/', $fileName);
 
-        $newCompany->logo = $FileName;
+        $newCompany->logo = $fileName;
         $newCompany->update();
 
         return redirect()->route('companies.index')->with('success', 'Company updated successfully.');
@@ -127,9 +118,7 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company)
     {
-        //
-        Company::find($company->id)->delete();
-
+        $company->delete();
         return redirect()->route('companies.index')->with('success', 'Company deleted successfully.');
     }
 }

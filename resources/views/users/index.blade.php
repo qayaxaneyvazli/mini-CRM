@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Companies') }}
+            {{ __('Users') }}
         </h2>
     </x-slot>
 
@@ -22,19 +22,15 @@
                                 <tr>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Name
+                                        @lang('index.ad')
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Email
+                                        @lang('index.email')
                                     </th>
                                     <th scope="col"
                                         class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Logo
-                                    </th>
-                                    <th scope="col"
-                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Website
+                                        @lang('index.rol')
                                     </th>
                                     <th scope="col" class="relative px-6 py-3">
                                         <span class="sr-only">Edit</span>
@@ -42,19 +38,15 @@
                                     <th scope="col" class="relative px-6 py-3">
                                         <span class="sr-only">Delete</span>
                                     </th>
-                                    <th scope="col" class="relative px-6 py-3">
-                                        <span class="sr-only"> </span>
-                                    </th>
                                 </tr>
 
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                <a href="{{route('companies.create')}}" class="text-indigo-600 hover:text-indigo-900">Create Company</a>
-                                @foreach($companies as $company)
+                                @foreach($users as $user)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm font-medium text-gray-900">
-                                                {{$company->name}}
+                                                {{$user->name}}
                                             </div>
                         </div>
 
@@ -62,38 +54,32 @@
 
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">  {{$company->email}}</div>
+                        <div class="text-sm text-gray-900">  {{$user->email}}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                  <img class="card-img-top" src="{{asset('/storage/images/'.$company->logo)}}" alt="Card image cap">
-                </span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {{$company->website}}
+                        @foreach($user->roles as $role)
+
+                            {{$role->name}}
+                        @endforeach
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-{{--                        <form method="POST" action="{{route('companies.edit',$company->id)}}">--}}
-{{--                            @csrf--}}
-{{--                            @method('GET')--}}
-{{--                            --}}
-{{--                        </form>--}}
-                        <a href="{{route('companies.edit',$company->id)}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                                <form method="POST" action="{{route('users.edit',$user->id)}}">
+                                                    @csrf
+                                                    @method('GET')
+                                                </form>
+                        <a href="{{route('users.edit',$user->id)}}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <form method="POST" action="{{route('companies.destroy',$company->id)}}">
+                        <form method="POST" action="{{route('users.destroy',$user->id)}}">
                             @csrf
                             @method('DELETE')
                             <button  class="text-indigo-600 hover:text-indigo-900">Delete</button>
                         </form>
 
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-
-                    </td>
                     </tr>
                 @endforeach
-                {{$companies->links()}}
+
 
                 <!-- More people... -->
 

@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
 
@@ -24,13 +25,14 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        return [
+        $user= User::factory(20)->create([
             'name' => $this->faker->name(),
-            'email' =>$this->faker->email(),
+            'email' => $this->faker->email(),
             'email_verified_at' => now(),
-            'password' => $this->faker->password, // password
+            'password' => $this->faker->password,
             'remember_token' => Str::random(10),
-        ];
+        ]);
+        $user->assignRole('Standart User');
     }
 
     /**

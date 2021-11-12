@@ -12,6 +12,7 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
@@ -21,16 +22,32 @@
                     <x-jet-nav-link href="{{ route('employers.index') }}" :active="request()->routeIs('employers.index')">
                         {{ __('Employers') }}
                     </x-jet-nav-link>
+                    @role('Admin')
+                    <x-jet-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
+                        {{ __('Users') }}
+                    </x-jet-nav-link>
+                    @endrole
+                    <x-jet-nav-link href="{{ route(Route::currentRouteName(),'az')}}" :active="App::currentLocale('az')">
+                        <image src="http://socar-petroleum.az/wp-content/plugins/sitepress-multilingual-cms/res/flags/az.png"></image>
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route(Route::currentRouteName(),'en')}}" :active="App::currentLocale('en')">
+                        <img class="iclflag" src="http://socar-petroleum.az/wp-content/plugins/sitepress-multilingual-cms/res/flags/en.png" alt="en" title="en">
+                    </x-jet-nav-link>
+
+
                 </div>
             </div>
+
 
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                     <div class="ml-3 relative">
+
                         <x-jet-dropdown align="right" width="60">
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md">
+
                                     <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:bg-gray-50 hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition">
                                         {{ Auth::user()->currentTeam->name }}
 
@@ -79,6 +96,7 @@
                 <div class="ml-3 relative">
                     <x-jet-dropdown align="right" width="48">
                         <x-slot name="trigger">
+
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                                 <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
                                     <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
@@ -94,6 +112,7 @@
                                     </button>
                                 </span>
                             @endif
+
                         </x-slot>
 
                         <x-slot name="content">
@@ -111,6 +130,7 @@
                                     {{ __('API Tokens') }}
                                 </x-jet-dropdown-link>
                             @endif
+
 
                             <div class="border-t border-gray-100"></div>
 
@@ -148,6 +168,7 @@
                 {{ __('Dashboard') }}
             </x-jet-responsive-nav-link>
         </div>
+
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
